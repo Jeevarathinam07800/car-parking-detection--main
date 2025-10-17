@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Parking Detection System</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-car"></i>
+                    <h1>Smart Parking Detection</h1>
+                </div>
+                <div class="status-indicator">
+                    <div class="status-dot connected"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-upload"></i> Upload Image</h2>
+                        <p>Upload an image to process parking detection</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <h3>Drop your image here</h3>
+                                <p>or click to browse</p>
+                                <input type="file" id="imageInput" accept="image/*" hidden>
+                                <button class="btn btn-primary" onclick="document.getElementById('imageInput').click()">
+                                    Choose Image File
+                                </button>
+                            </div>
+                        </div>
+                        <div class="upload-progress" id="uploadProgress" style="display: none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <span class="progress-text" id="progressText">Processing...</span>
+                        </div>
+                        <div class="image-info" id="imageInfo" style="display: none;">
+                            <div class="info-item">
+                                <i class="fas fa-image"></i>
+                                <span id="fileName"></span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                                <span id="imageSize"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Control Section -->
+            <section class="control-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-cogs"></i> Detection Controls</h2>
+                        <p>Process parking space detection</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="controls-grid">
+                            <div class="control-group">
+                                <label>Parking Spaces</label>
+                                <div class="space-counter">
+                                    <span id="totalSpaces">0</span>
+                                    <span>Total Spaces</span>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <button class="btn btn-success" id="processBtn" onclick="processImage()">
+                                    <i class="fas fa-play"></i> Process Image
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Preview Section -->
+            <section class="preview-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-eye"></i> Detection Results</h2>
+                        <div class="detection-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Free Spaces</span>
+                                <span class="stat-value free" id="freeSpaces">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Occupied</span>
+                                <span class="stat-value occupied" id="occupiedSpaces">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Total</span>
+                                <span class="stat-value total" id="totalSpacesDisplay">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="video-container">
+                            <div class="video-placeholder" id="imagePlaceholder">
+                                <i class="fas fa-image"></i>
+                                <h3>No Image Loaded</h3>
+                                <p>Upload an image to start detection</p>
+                            </div>
+                            <img id="detectionImage" style="display: none;" alt="Detection Preview">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Instructions Section -->
+            <section class="instructions-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-info-circle"></i> How to Use</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="instructions-grid">
+                            <div class="instruction-item">
+                                <div class="instruction-icon">
+                                    <i class="fas fa-upload"></i>
+                                </div>
+                                <div class="instruction-content">
+                                    <h3>1. Upload Image</h3>
+                                    <p>Upload an image of your parking lot using the upload section above.</p>
+                                </div>
+                            </div>
+                            <div class="instruction-item">
+                                <div class="instruction-icon">
+                                    <i class="fas fa-mouse-pointer"></i>
+                                </div>
+                                <div class="instruction-content">
+                                    <h3>2. Mark Spaces</h3>
+                                    <p>Use the original ParkingSpacePicker.py to mark parking spaces on your image.</p>
+                                </div>
+                            </div>
+                            <div class="instruction-item">
+                                <div class="instruction-icon">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="instruction-content">
+                                    <h3>3. Process Image</h3>
+                                    <p>Click "Process Image" to analyze parking space occupancy.</p>
+                                </div>
+                            </div>
+                            <div class="instruction-item">
+                                <div class="instruction-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="instruction-content">
+                                    <h3>4. View Results</h3>
+                                    <p>See the processed image with parking space detection results.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2024 Smart Parking Detection System. Deployed on Vercel.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/script-vercel.js"></script>
+</body>
+</html>
