@@ -1,0 +1,18 @@
+{
+  "name": "car-parking-detection",
+  "version": "1.0.0",
+  "description": "Car parking space detection web application",
+  "main": "app.py",
+  "scripts": {
+    "start": "python app.py"
+  },
+  "keywords": [
+    "parking",
+    "detection",
+    "opencv",
+    "computer-vision",
+    "flask"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}
